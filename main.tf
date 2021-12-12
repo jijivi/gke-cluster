@@ -1,19 +1,36 @@
-terraform {
-  required_providers {
-    google = {
-      source  = "registry.terraform.io/hashicorp/google"
-      version = "4.3.0"
-    }
+resource "google_container_cluster" "default" {
+  provider    = google-beta
+  name        = var.name
+  project     = var.project
+  description = "Demo GKE Cluster"
+  location    = var.location
+
+  remove_default_node_pool = true
+  initial_node_count       = var.initial_node_count
+}
+
+resource "google_container_node_pool" "default" {
+  provider   = google-beta
+  name       = "${var.name}-node-pool"
+  project    = var.project
+  location   = var.location
+  cluster    = google_container_cluster.default.name
+  node_count = 2
+  autoscaling {
+    max_node_count = 3
+    min_node_count = 1
   }
-}
+  node_config {
+    spot         = true
+    machine_type = var.machine_type
 
-provider "google" {
-  credentials = file(var.credentials_file)
-  project = var.project
-  region  = var.region
-  zone    = var.zone
-}
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
 
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
 }
