@@ -2,9 +2,9 @@ variable "project" {
   description = "project id"
 }
 
-variable "credentials_file" {
-  description = "GCP creds"
-}
+# variable "credentials_file" {
+#   description = "GCP creds"
+# }
 
 variable "region" {
   default     = "us-west2"

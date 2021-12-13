@@ -1,4 +1,4 @@
-name: Create GKE cluster
+name: Destroy GKE cluster
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ jobs:
   create-gke:
     env:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/.gcp.json
+
     runs-on: ubuntu-latest
     steps:
     - name: Get the source code
@@ -26,18 +27,9 @@ jobs:
       env:
         GAR_JSON: ${{secrets.GAR_JSON_KEY}}
 
-    - name: Plan
-      run: |
-        cd ${GITHUB_WORKSPACE}/src
-        terraform init
-        terraform fmt
-        terraform validate
-        terraform plan
-
-    - name: Apply
+    - name: Destroy Cluster
       run: |
         gcloud info
         cd ${GITHUB_WORKSPACE}/src
-        terraform apply -auto-approve
-        rm -f "${GOOGLE_APPLICATION_CREDENTIALS}"
-
+        terraform apply --destroy -auto-approve
+        rm -f "${GITHUB_WORKSPACE}/gcp.json"
