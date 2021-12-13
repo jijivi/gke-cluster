@@ -36,7 +36,7 @@ jobs:
 
     - name: Apply
       run: |
-        gcloud info
+        # gcloud info
         cd ${GITHUB_WORKSPACE}/src
         terraform apply -auto-approve
         rm -f $GOOGLE_APPLICATION_CREDENTIALS
