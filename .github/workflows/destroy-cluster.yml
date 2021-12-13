@@ -22,7 +22,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@v0.3.0
 
     - name: expose GCP creds as file
-      run: 'echo "$GAR_JSON" > "${GOOGLE_APPLICATION_CREDENTIALS}"'
+      run: 'echo "$GAR_JSON" > "$GOOGLE_APPLICATION_CREDENTIALS"'
       shell: bash
       env:
         GAR_JSON: ${{secrets.GAR_JSON_KEY}}
