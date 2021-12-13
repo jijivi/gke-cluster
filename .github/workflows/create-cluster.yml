@@ -1,0 +1,35 @@
+name: Create GKE cluster
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-gke:
+  
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get the source code
+      uses: actions/checkout@v2
+
+    - name: Plan
+      run: |
+        cd src
+        terraform init
+        terraform fmt
+        terraform validate
+        terraform plan
+
+    - id: auth
+      uses: google-github-actions/auth@v0
+      with:
+        credentials_json: ${{ secrets.GAR_JSON_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.3.0
+
+    - name: Use gcloud CLI
+      run: |
+        gcloud info
+        cd ${GITHUB_WORKSPACE}/src
+        terraform apply -auto-approve
+

@@ -7,12 +7,12 @@ variable "credentials_file" {
 }
 
 variable "region" {
-  default     = "us-central1"
+  default     = "us-west2"
   description = "region"
 }
 
 variable "zone" {
-  default     = "us-central1-c"
+  default     = "us-west2-a"
   description = "zone"
 }
 
@@ -23,7 +23,7 @@ variable "name" {
 
 
 variable "location" {
-  default = "us-central1-c"
+  default = "us-west2-a"
 }
 
 variable "initial_node_count" {
