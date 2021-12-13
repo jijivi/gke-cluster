@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-gke:
+  destroy-gke:
     env:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/.gcp.json
 
@@ -31,5 +31,6 @@ jobs:
       run: |
         gcloud info
         cd ${GITHUB_WORKSPACE}/src
+        terraform init
         terraform apply --destroy -auto-approve
-        rm -f "${GITHUB_WORKSPACE}/gcp.json"
+        rm -f "$GITHUB_WORKSPACE/gcp.json"
