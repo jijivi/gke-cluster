@@ -11,14 +11,6 @@ jobs:
     - name: Get the source code
       uses: actions/checkout@v2
 
-    - name: Plan
-      run: |
-        cd src
-        terraform init
-        terraform fmt
-        terraform validate
-        terraform plan
-
     - id: auth
       uses: google-github-actions/auth@v0
       with:
@@ -26,6 +18,15 @@ jobs:
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.3.0
+
+
+    - name: Plan
+      run: |
+        cd ${GITHUB_WORKSPACE}/src
+        terraform init
+        terraform fmt
+        terraform validate
+        terraform plan
 
     - name: Use gcloud CLI
       run: |
