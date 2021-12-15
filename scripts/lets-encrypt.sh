@@ -41,7 +41,7 @@ Create a Ingress resource which will make the certificate request
 '''
 kubectl apply -f ingress-example.yaml
 
-kubectl get ingress/hello-app-ingress certificate/hello-app-ingress secret/hello-app-tls
+kubectl get ingress/hello-app-ingress certificate/hello-app-tls secret/hello-app-tls
 
 
 
