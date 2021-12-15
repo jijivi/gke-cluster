@@ -56,6 +56,7 @@ resource "google_container_node_pool" "default" {
 # https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip
 # https://cloud.google.com/community/tutorials/nginx-ingress-gke
 resource "google_compute_global_address" "ingress_ip" {
+  count = "${var.ingress_ip_enabled ? 1 : 0}"
   name    = var.project
   project = var.project
   timeouts {

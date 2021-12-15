@@ -33,3 +33,7 @@ variable "initial_node_count" {
 variable "machine_type" {
   default = "n1-standard-1"
 }
+
+variable "ingress_ip_enabled" {
+  default = false
+}

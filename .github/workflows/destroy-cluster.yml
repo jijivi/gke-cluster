@@ -30,7 +30,7 @@ jobs:
     - name: Destroy Cluster
       run: |
         # gcloud info
-        cd ${GITHUB_WORKSPACE}/src
+        cd ${GITHUB_WORKSPACE}/terraform
         terraform init
         terraform apply --destroy -auto-approve
         rm -f "$GITHUB_WORKSPACE/gcp.json"

@@ -28,7 +28,7 @@ jobs:
 
     - name: Plan
       run: |
-        cd ${GITHUB_WORKSPACE}/src
+        cd ${GITHUB_WORKSPACE}/terraform
         terraform init
         terraform fmt
         terraform validate
@@ -37,6 +37,6 @@ jobs:
     - name: Apply
       run: |
         # gcloud info
-        cd ${GITHUB_WORKSPACE}/src
+        cd ${GITHUB_WORKSPACE}/terraform
         terraform apply -auto-approve
         rm -f $GOOGLE_APPLICATION_CREDENTIALS
