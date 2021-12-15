@@ -20,21 +20,21 @@ resource "google_container_node_pool" "default" {
   project    = var.project
   location   = var.location
   cluster    = google_container_cluster.default.name
-  node_count = 1
+  node_count = var.initial_node_count
   autoscaling {
     max_node_count = 3
-    min_node_count = 1
+    min_node_count = var.initial_node_count
   }
 
   upgrade_settings {
     max_surge       = 1
-    max_unavailable = 1
+    max_unavailable = var.initial_node_count
   }
   node_config {
-    spot            = true
-    machine_type    = var.machine_type
-    disk_size_gb    = 35
-    
+    spot         = true
+    machine_type = var.machine_type
+    disk_size_gb = 35
+
     metadata = {
       disable-legacy-endpoints = "true"
     }
@@ -52,3 +52,14 @@ resource "google_container_node_pool" "default" {
     update = "15m"
   }
 }
+
+# https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip
+# https://cloud.google.com/community/tutorials/nginx-ingress-gke
+resource "google_compute_global_address" "ingress_ip" {
+  name    = var.project
+  project = var.project
+  timeouts {
+    create = "5m"
+  }
+}
+
